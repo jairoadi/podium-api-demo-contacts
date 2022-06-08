@@ -2,7 +2,7 @@
   "name": "podium-api",
   "version": "1.0.0",
   "description": "Podium demo for https requests",
-  "main": "index.js",
+  "main": "index-2.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jairoadi/podium-api-demo#readme",
   "dependencies": {
     "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
     "node-fetch": "^3.2.4"
   }
 }
