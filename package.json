@@ -1,8 +1,8 @@
 {
   "name": "podium-api",
   "version": "1.0.0",
-  "description": "Podium demo for https requests",
-  "main": "index-2.js",
+  "description": "A Podium demo app for CRUD contacts",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

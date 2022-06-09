@@ -18,10 +18,13 @@ let token
 app.use(express.urlencoded());
 app.use(express.json());
 
+//Retrieve all contacts
 app.get('/', async (req, res) => {
     try {
-      token = await getTokenID();
-      const response = await fetch(`${baseUrl}/contacts`, {
+      const token = await getTokenID();
+
+      if(token) {
+        const requestAPI = await fetch(`${baseUrl}/contacts`, {
           Method: 'GET',
           Headers: {
               Accept: 'application.json',
@@ -30,8 +33,10 @@ app.get('/', async (req, res) => {
           }
       })
 
-      return res.send(response.data)
-
+      const reqResponse = await requestAPI.json();
+      return res.send(reqResponse)
+      }
+      
     } catch (error) {
       console.error('Error', error)
       return res.sendStatus(error.response.status)
@@ -39,9 +44,10 @@ app.get('/', async (req, res) => {
     
 })
 
+//Create a contact for a specified location
 app.post('/', async (req, res) => {
   try {
-    token = await getTokenID();
+    const token = await getTokenID();
     let request;
 
     if (token) {
@@ -53,12 +59,13 @@ app.post('/', async (req, res) => {
             },
             body: JSON.stringify(req.body)
         })
+
+        const reqResponse = await request.json();
+
+        return res.send(reqResponse)
+    } else {
+      return(res.send('No authorization token was found.'))
     }
-
-    const reqResponse = await request.json();
-    cconsole.log('request response', reqResponse);
-
-    return res.send(reqResponse)
   } catch(error) {
     console.error(error)
     return res.send(error)
@@ -89,6 +96,7 @@ async function  getTokenID() {
     }
   } catch (error) {
     console.error(`Error retrieveing a new token, ${error}`)
+    return error
   }
   
 }
