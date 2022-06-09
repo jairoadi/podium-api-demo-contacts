@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import fs from 'fs'
 import { createServer } from 'https'
@@ -10,9 +11,9 @@ const app = express()
 const server = createServer({key: key, cert: cert}, app)
 
 const baseUrl = 'https://api.podium.com/v4/'
-const refresToken = ''
-const clientID = ''
-const clientSecret = ''
+const refresToken = process.env.REFRESHTOKEN
+const clientID = process.env.CLIENTID
+const clientSecret = process.env.CLIENTSECRET
 let token
 
 app.use(express.urlencoded());
@@ -23,18 +24,17 @@ app.get('/', async (req, res) => {
     try {
       const token = await getTokenID();
 
-      if(token) {
+      if (token) {
         const requestAPI = await fetch(`${baseUrl}/contacts`, {
           Method: 'GET',
-          Headers: {
-              Accept: 'application.json',
+          headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
           }
-      })
+        })
 
-      const reqResponse = await requestAPI.json();
-      return res.send(reqResponse)
+        const reqResponse = await requestAPI.json();
+        return res.send(reqResponse)
       }
       
     } catch (error) {
@@ -61,7 +61,6 @@ app.post('/', async (req, res) => {
         })
 
         const reqResponse = await request.json();
-
         return res.send(reqResponse)
     } else {
       return(res.send('No authorization token was found.'))
