@@ -23,7 +23,7 @@ In order to make https requests make sure you have a developer account and the f
 ### 2. Setup local project
 ```html
 <!--Clone this repository-->
-git clone [https:/](https://github.com/podium/podium-api-demo-contacts.git)
+git clone https://github.com/podium/podium-api-demo-contacts.git
 
 <!--Go to the repository directory-->
 cd ~/podium-api-demo-contacts
